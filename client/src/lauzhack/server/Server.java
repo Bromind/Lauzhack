@@ -52,7 +52,9 @@ public class Server{
 			}
 			String str = new String(name2, StandardCharsets.UTF_8);
 			//System.out.println(str);
-			File file = new File ("c:/temp/"+str+".txt");
+			String filename = "/tmp/" + str + ".txt";
+			System.out.println("[ReceiveHandler/handle] Creating file " + filename);
+			File file = new File (filename);
 			if(!file.exists()) { 
 				PrintWriter writer = new PrintWriter(file);
 				writer.print("");

@@ -27,8 +27,8 @@ public class Client {
 			return;
 		}
 		
-		//PollingWorker pw = new PollingWorker(ne, printer, pending_messages, lock);
-        //(new Thread(pw)).start();
+		PollingWorker pw = new PollingWorker(ne, printer, pending_messages, lock);
+        (new Thread(pw)).start();
         PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
         (new Thread(pushing)).start();
         
