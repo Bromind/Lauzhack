@@ -36,7 +36,7 @@ public class Server{
 	static class ReceiveHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
 
-			//System.out.println("receive");
+			System.out.println("receive");
 
 			// add the required response header for a PDF file
 			Headers h = t.getResponseHeaders();
@@ -53,8 +53,13 @@ public class Server{
 			String str = new String(name2, StandardCharsets.UTF_8);
 			//System.out.println(str);
 			File file = new File ("c:/temp/"+str+".txt");
-
+			if(!file.exists()) { 
+				PrintWriter writer = new PrintWriter(file);
+				writer.print("");
+				writer.close();
+			}
 			byte [] bytearray  = new byte [(int)file.length()];
+			
 			FileInputStream fis = new FileInputStream(file);
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			bis.read(bytearray, 0, bytearray.length);
@@ -94,16 +99,10 @@ public class Server{
 			Message message = new Message(read_byte);	
 			String dest = message.getDest();
 
-			//File file = new File ("c:/temp/"+dest+".txt");
-			//byte [] bytearray  = new byte [(int)file.length()];
-			//FileOutputStream fos = new FileOutputStream(file);
-			//BufferedOutputStream bos = new BufferedOutputStream(fos);
-
 			FileWriter fw = new FileWriter("c:/temp/"+dest+".txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter out = new PrintWriter(bw);
-			//TODO: be careful we erase!!
-			//bos.write(bytearray, 0, bytearray.length);
+			
 			out.println(read_byte);
 			out.close();
 			// ok, we are ready to send the response.
