@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 
 
@@ -24,7 +26,7 @@ public class NetworkInterface {
 		
 	}
 	
-	public String getNextMessage() throws NoMessageException, IOException {
+	public List<String> getNextMessage() throws NoMessageException, IOException {
 		HttpURLConnection connection;
 
 		URL serverAddress = new URL(server + "/receive");
@@ -42,16 +44,13 @@ public class NetworkInterface {
 		InputStream is = connection.getInputStream();
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
-		StringBuffer response = new StringBuffer(); // or StringBuffer if Java
-														// version 5+
+		List<String> response = new LinkedList<String>();
 		String line;
 		while ((line = rd.readLine()) != null) {
-			response.append(line);
-			response.append('\r');
+			response.add(line);
 		}
 		rd.close();
-		return response.toString();
-
+		return response;
 	}
 
 	public boolean sendMessage(String message, Color colors[], String dest) {
