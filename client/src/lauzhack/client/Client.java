@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import lauzhack.client.keyboard.DummyPrinter;
+import lauzhack.client.keyboard.PrinterInterface;
+
 
 public class Client {
 
@@ -13,24 +16,28 @@ public class Client {
 		NetworkInterface ne;
 		List<Message> pending_messages = new LinkedList<>();
 		Lock lock = new ReentrantLock(true);
+		PrinterInterface printer = (PrinterInterface) new DummyPrinter();
 		
 		/* Init stuff */
 		try {
-			ne = new NetworkInterface("My name", "http://127.0.0.1:8000", "GET");
+			ne = new NetworkInterface("My name", "http://128.179.180.74:8000", "POST");
 		} catch (MalformedURLException e) {
 			System.err.println("U noob 4");
 			System.err.println(e.getMessage());
 			return;
 		}
 		
-		PullingWorker pw = new PullingWorker(ne, pending_messages, lock);
+		PullingWorker pw = new PullingWorker(ne, printer, pending_messages, lock);
         (new Thread(pw)).start();
-
+        PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
+        (new Thread(pushing)).start();
+        
+        
 		Color colors[] = { new Color(0, 0, 0) };
 
 		// Example
 
-		ne.sendInitMessage();
+		//ne.sendInitMessage();
 		ne.sendMessage("Wololo", colors, "dest");
 
 	}

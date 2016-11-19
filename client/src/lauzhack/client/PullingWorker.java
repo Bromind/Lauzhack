@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-import lauzhack.client.keyboard.Printer;
 import lauzhack.client.keyboard.PrinterInterface;
 
 class PullingWorker implements Runnable {
 
 	List<Message> pending_messages;
-	PrinterInterface printer = (PrinterInterface) new Printer();
+	PrinterInterface printer;
 	NetworkInterface ne;
 	Lock lock;
 
-	public PullingWorker(NetworkInterface ne, List<Message> pending, Lock lock) {
+	public PullingWorker(NetworkInterface ne, PrinterInterface printer, List<Message> pending, Lock lock) {
 		this.ne = ne;
 		this.pending_messages = pending;
 		this.lock = lock;
+		this.printer = printer;
 	}
 
 	public void run() {

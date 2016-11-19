@@ -90,5 +90,12 @@ public class Message {
 		return this.dest;
 	}
 	
+	public char[] getMessage() {
+		return message;
+	}
+	
+	public Color[] getColor() {
+		return colors;
+	}
 }
 
