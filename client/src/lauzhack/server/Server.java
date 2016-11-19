@@ -36,7 +36,7 @@ public class Server{
 	static class ReceiveHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
 
-			System.out.println("receive");
+			//System.out.println("receive");
 
 			// add the required response header for a PDF file
 			Headers h = t.getResponseHeaders();
@@ -51,7 +51,7 @@ public class Server{
 				name2[i]=name[i];
 			}
 			String str = new String(name2, StandardCharsets.UTF_8);
-			System.out.println(str);
+			//System.out.println(str);
 			File file = new File ("c:/temp/"+str+".txt");
 
 			byte [] bytearray  = new byte [(int)file.length()];
@@ -74,7 +74,7 @@ public class Server{
 	static class SendHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
 
-			System.out.println("send");
+			System.out.println("[Server/SendHandler] send");
 
 			// add the required response header for a PDF file
 			Headers h = t.getResponseHeaders();

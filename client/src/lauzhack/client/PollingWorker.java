@@ -6,14 +6,14 @@ import java.util.concurrent.locks.Lock;
 
 import lauzhack.client.keyboard.PrinterInterface;
 
-class PullingWorker implements Runnable {
+class PollingWorker implements Runnable {
 
 	List<Message> pending_messages;
 	PrinterInterface printer;
 	NetworkInterface ne;
 	Lock lock;
 
-	public PullingWorker(NetworkInterface ne, PrinterInterface printer, List<Message> pending, Lock lock) {
+	public PollingWorker(NetworkInterface ne, PrinterInterface printer, List<Message> pending, Lock lock) {
 		this.ne = ne;
 		this.pending_messages = pending;
 		this.lock = lock;
@@ -40,6 +40,11 @@ class PullingWorker implements Runnable {
 				} catch (InterruptedException e1) {
 
 				}
+			}
+			try{
+				wait(1000);
+			} catch (InterruptedException e){
+				
 			}
 		}
 	}

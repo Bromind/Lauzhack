@@ -20,15 +20,15 @@ public class Client {
 		
 		/* Init stuff */
 		try {
-			ne = new NetworkInterface("My name", "http://128.179.180.74:8000", "POST");
+			ne = new NetworkInterface("My name", "http://localhost:8000", "POST");
 		} catch (MalformedURLException e) {
 			System.err.println("U noob 4");
 			System.err.println(e.getMessage());
 			return;
 		}
 		
-		PullingWorker pw = new PullingWorker(ne, printer, pending_messages, lock);
-        (new Thread(pw)).start();
+		//PollingWorker pw = new PollingWorker(ne, printer, pending_messages, lock);
+        //(new Thread(pw)).start();
         PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
         (new Thread(pushing)).start();
         
@@ -38,7 +38,7 @@ public class Client {
 		// Example
 
 		//ne.sendInitMessage();
-		ne.sendMessage("Wololo", colors, "dest");
+		ne.sendMessage("Wololo", colors, "My name");
 
 	}
 

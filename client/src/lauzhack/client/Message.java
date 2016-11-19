@@ -43,7 +43,7 @@ public class Message {
 		this.dest = parser.getString("dest");
 		this.colors = new Color[0];
 		} catch (JSONException e) {
-			System.err.println("U noob 3");
+			System.err.println("Error parsing JSON: " + json_string);
 			System.err.println(e.toString());
 		}
 	}

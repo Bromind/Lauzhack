@@ -36,8 +36,8 @@ public class NetworkInterface {
 		connection.setUseCaches(false);
 		connection.setDoOutput(true);
 
+		System.out.println("[NetworkInterface/getNextMessage] Polling");
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-		System.out.println("Sending message.");
 		wr.writeBytes(src);
 		wr.close();
 
@@ -72,10 +72,11 @@ public class NetworkInterface {
 			connection.setDoOutput(true);
 			
 			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-			System.out.println("Sending message.");
+			System.out.println("[NetworkInterface/sendMessage] Sending message.");
 			wr.writeBytes(json_str);
 			wr.close();
 		} catch (IOException e) {
+			System.err.println("Error in sending message");
 			System.err.println(e.getMessage());
 			return false;
 		}
@@ -111,7 +112,7 @@ public class NetworkInterface {
 			connection.setDoOutput(true);
 			
 			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-			System.out.println("Sending message.");
+			System.out.println("[NetworkInterface/sendInitMessage] Sending message.");
 			wr.writeBytes(src);
 			wr.close();
 		} catch (IOException e) {
