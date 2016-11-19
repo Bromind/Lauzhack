@@ -85,4 +85,10 @@ public class Message {
 	public String toString() {
 		return "Source: " + src + "\nDest: " + dest + "\n" + message[0] + message[1];
 	}
+	
+	public String getDest(){
+		return this.dest;
+	}
+	
 }
+
