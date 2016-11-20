@@ -11,29 +11,32 @@ class PollingWorker implements Runnable {
 	List<Message> pending_messages;
 	PrinterInterface printer;
 	NetworkInterface ne;
-	Lock lock;
+	Lock listLock, kbLock;
 
-	public PollingWorker(NetworkInterface ne, PrinterInterface printer, List<Message> pending, Lock lock) {
+	public PollingWorker(NetworkInterface ne, PrinterInterface printer, List<Message> pending, Lock listLock, Lock kbLock) {
 		this.ne = ne;
 		this.pending_messages = pending;
-		this.lock = lock;
+		this.listLock = listLock;
 		this.printer = printer;
+		this.kbLock = kbLock;
 	}
 
 	public void run() {
-		int pending = 0;
+		int pending = -1;
 		while (true) {
 			List<String> new_message;
 
 			try {
 				new_message = ne.getNextMessage();
 				for (String line : new_message) {
-					lock.lock();
+					listLock.lock();
 					pending_messages.add(new Message(line));
-					lock.unlock();
+					listLock.unlock();
 				}
 				if(pending != pending_messages.size()) {
+					kbLock.lock();
 					printer.updatePending(pending_messages.size());
+					kbLock.unlock();
 					pending = pending_messages.size();
 				}
 			} catch (IOException e) {

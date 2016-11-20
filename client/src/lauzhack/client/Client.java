@@ -19,8 +19,10 @@ public class Client {
 		
 		NetworkInterface ne;
 		List<Message> pending_messages = new LinkedList<>();
-		Lock lock = new ReentrantLock(true);
+		Lock listLock = new ReentrantLock(true);
+		Lock kbLock = new ReentrantLock(true);
 		PrinterInterface printer = (PrinterInterface) new Printer();
+
 		
 		/* Init stuff */
 		try {
@@ -31,9 +33,9 @@ public class Client {
 			return;
 		}
 		
-		PollingWorker pw = new PollingWorker(ne, printer, pending_messages, lock);
+		PollingWorker pw = new PollingWorker(ne, printer, pending_messages, listLock, kbLock);
         (new Thread(pw)).start();
-        PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
+        PushingWorker pushing = new PushingWorker(printer, pending_messages, listLock, kbLock);
         (new Thread(pushing)).start();
         Color[] color = {new Color(100, 0, 0)};
         try {
