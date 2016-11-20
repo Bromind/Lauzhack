@@ -16,7 +16,7 @@ public class Client {
 	private static final boolean VERBOSE = false;
 
 	public static void main(String[] args) {
-		System.out.println("Starting Anal-plug-and-play client, provided to you by the Fist-in, Fist-out team.");
+		System.out.println("Starting client.");
 		
 		NetworkInterface ne;
 		List<Message> pending_messages = new LinkedList<>();
