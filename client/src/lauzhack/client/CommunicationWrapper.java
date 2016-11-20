@@ -10,6 +10,13 @@ public class CommunicationWrapper {
 	}
 	
 	public void sendMessage(String message, String dest, Color[] colors) {
+		/*
+		if (colors.length >= 1) {
+			for (int i = colors.length; i < message.length(); i++) {
+				colors[i] = colors[0];
+			}
+		}
+		*/
 		ne.sendMessage(message, colors, dest);
 	}
 	

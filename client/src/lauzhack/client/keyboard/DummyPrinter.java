@@ -12,13 +12,24 @@ public class DummyPrinter implements PrinterInterface {
 
 	@Override
 	public boolean printMessage(char[] m, Color[] c) {
-		System.out.println("Colored " + m.toString());
+		System.out.print("Colored ");
+		for(char c2: m) {
+			System.out.println(c2);
+		}
+		System.out.println("");
+		
 		return false;
 	}
 
 	@Override
 	public void updatePending(int pending) {
 		System.out.println("Now " + pending + " pending messages.");		
+	}
+
+	@Override
+	public void rainbow() {
+		// TODO Auto-generated method stub
+		System.out.println("Rainbow.");
 	}
 
 }

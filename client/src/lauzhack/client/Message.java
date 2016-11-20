@@ -46,13 +46,6 @@ public class Message {
 			System.err.println("Error parsing JSON: " + json_string);
 			System.err.println(e.toString());
 		}
-		
-		if(colors.length < message.length) {
-			Color c =  colors[colors.length - 1];
-			for(int i = message.length; i < colors.length; i++){
-				colors[i] = c;
-			}
-		}
 	}
 	
 	public String toJSON() {
