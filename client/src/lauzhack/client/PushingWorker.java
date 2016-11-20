@@ -29,7 +29,7 @@ public class PushingWorker {
 			kbLock.lock();
 			
 			System.out.println('[' + m.getMessageAsString() + ']');
-			if("rainbow".equals("rainbow")) {
+			if(m.getMessageAsString().equals("rainbow")) {
 				printer.rainbow();
 				kbLock.unlock();
 				return;
