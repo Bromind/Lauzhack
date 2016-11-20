@@ -54,10 +54,13 @@ public class Printer implements PrinterInterface {
 			updateWithKey(key, c[i]);
 			try {
 				Thread.sleep(1000);
+				clear();
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			clear();
+			
+			
 		}
 		return true;
 	}
