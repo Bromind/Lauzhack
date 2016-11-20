@@ -8,11 +8,13 @@ import lauzhack.client.keyboard.PrinterInterface;
 public class PushingWorker implements Runnable{
 
 	List<Message> pending_messages;
-	Lock lock;
+	Lock listLock;
+	Lock kbLock;
 	PrinterInterface printer;
 	
-	public PushingWorker(PrinterInterface printer, List<Message> pending, Lock lock) {
-		this.lock = lock;
+	public PushingWorker(PrinterInterface printer, List<Message> pending, Lock listLock, Lock kbLock) {
+		this.listLock = listLock;
+		this.kbLock = kbLock;
 		this.pending_messages = pending;
 		this.printer = printer;
 	}
@@ -20,15 +22,17 @@ public class PushingWorker implements Runnable{
 	@Override
 	public void run() {
 		while(true){
-			lock.lock();
+			listLock.lock();
 			int size = pending_messages.size();
 			Message m;
 			if(size != 0) {
 				m = pending_messages.remove(0);
-				lock.unlock();
+				kbLock.lock();
+				printer.updatePending(pending_messages.size());
 				printer.printMessage(m.getMessage(), m.getColor());
+				kbLock.unlock();
 			} else {
-				lock.unlock();
+				listLock.unlock();
 			}
 		}
 		
