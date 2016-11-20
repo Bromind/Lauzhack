@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import lauzhack.client.keyboard.Printer;
 import lauzhack.client.keyboard.PrinterInterface;
+import lauzhack.gui.GUI;
 
 
 public class Client {
@@ -38,6 +39,6 @@ public class Client {
         PushingWorker pushing = new PushingWorker(printer, pending_messages, listLock, kbLock);
 
         CommunicationWrapper cw = new CommunicationWrapper(pushing, ne);
-        
+        new GUI(cw);
 	}
 }
