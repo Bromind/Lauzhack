@@ -67,6 +67,7 @@ public class NetworkInterface {
 		
 		Message m = new Message(message.toCharArray(), colors, src, dest);
 		String json_str = m.toJSON();
+		System.out.println(json_str);
 		
 		HttpURLConnection connection;
 		

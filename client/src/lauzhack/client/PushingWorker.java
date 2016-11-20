@@ -27,6 +27,14 @@ public class PushingWorker {
 			m = pending_messages.remove(0);
 			listLock.unlock();
 			kbLock.lock();
+			
+			System.out.println('[' + m.getMessageAsString() + ']');
+			if("rainbow".equals("rainbow")) {
+				printer.rainbow();
+				kbLock.unlock();
+				return;
+			}
+			
 			printer.updatePending(pending_messages.size());
 			if (m.getColor() == null) {
 				printer.printMessage(m.getMessage());

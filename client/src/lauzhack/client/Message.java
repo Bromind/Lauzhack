@@ -23,16 +23,12 @@ public class Message {
 		try {
 			JSONObject parser = new JSONObject(json_string);
 
-			JSONArray messageArray = parser.getJSONArray("message");
 			JSONArray colorsArray = parser.getJSONArray("colors");
 
-			this.message = new char[20];
+			String mes = parser.getString("message");
+			
+			this.message = mes.substring(0, 20).toCharArray();
 			this.colors = new Color[20];
-
-			for (int i = 0; i < messageArray.length(); i++) {
-				String s = messageArray.getString(i);
-				this.message[i] = s.charAt(0);
-			}
 
 			this.colors = null;
 			if (colorsArray.length() > 0) {
@@ -56,25 +52,13 @@ public class Message {
 		try{
 			obj.put("source", src);
 			obj.put("dest", dest);
+			obj.put("message", this.getMessageAsString());
 		} catch (JSONException e) {
 			System.err.println("U noob");
 			System.err.println(e.toString());
 		}
-		
-		JSONArray json_colors = new JSONArray();
-		JSONArray json_message = new JSONArray();
-		
-		for(int i = 0; i < MAX_LENGTH; i++) {
-			if(i < message.length) {
-				json_message.put(message[i]);
-				if(i < colors.length) {
-					json_colors.put(colors[i].toJSONArray());	
-				}
-			}
-		}
-		
 		try {
-			obj.put("message", message);
+			obj.put("message", this.getMessageAsString());
 			obj.put("colors", colors);
 		} catch (JSONException e) {
 			System.err.println("U noob 2");
@@ -99,6 +83,14 @@ public class Message {
 	
 	public Color[] getColor() {
 		return colors;
+	}
+	
+	public String getMessageAsString(){
+		StringBuilder sb = new StringBuilder();
+		for(char c: message) {
+			sb.append(c);
+		}
+		return sb.toString();
 	}
 }
 
