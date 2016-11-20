@@ -9,12 +9,15 @@ public class CommunicationWrapper {
 		this.pw = pw;
 	}
 	
-	public void sendMessage(String message, String dest) {
-		Color[] colors = { new Color(100, 0, 0) };
+	public void sendMessage(String message, String dest, Color[] colors) {
 		ne.sendMessage(message, colors, dest);
 	}
 	
 	public void displayNext(){
 		pw.displayNextMessage();
+	}
+	
+	public void newName(String name) {
+		ne.setSrc(name);
 	}
 }

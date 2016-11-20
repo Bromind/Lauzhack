@@ -15,10 +15,14 @@ import java.util.List;
 
 public class NetworkInterface {
 	
-	String src;
-	String server;
-	String method;
-	boolean verbose;
+	private String src;
+	private String server;
+	private String method;
+	private boolean verbose;
+	
+	public void setSrc(String src){
+		this.src = src;
+	}
 	
 	public NetworkInterface(String sourceName, String serverAddress, String method, boolean verbose) throws MalformedURLException {
 		src = sourceName;
