@@ -1,6 +1,7 @@
 package lauzhack.client.keyboard;
 
 import com.logitech.gaming.LogiLED;
+import com.sun.xml.internal.ws.dump.LoggingDumpTube;
 
 import lauzhack.client.Color;
 
@@ -17,6 +18,7 @@ public class Printer implements PrinterInterface {
 		this.backgroundColor = backgroundColor;
 		this.pendingColor = pendingColor;
 		this.defaultMessageColor = defaultMessageColor;
+		LogiLED.LogiLedSetTargetDevice(LogiLED.LOGI_DEVICETYPE_PERKEY_RGB);
 		clear();
 	} 
 
@@ -26,6 +28,7 @@ public class Printer implements PrinterInterface {
 		this.backgroundColor = new Color(0, 0, 100);
 		this.pendingColor = new Color(0, 100, 0);
 		this.defaultMessageColor = new Color(100, 0, 0);
+		LogiLED.LogiLedSetTargetDevice(LogiLED.LOGI_DEVICETYPE_PERKEY_RGB);
 		clear();
 	} 
 
@@ -98,6 +101,20 @@ public class Printer implements PrinterInterface {
 		}
 		int key = intToKey(c);
 		printKey(key, pendingColor);
+		
+		LogiLED.LogiLedSetTargetDevice(LogiLED.LOGI_DEVICETYPE_RGB);
+		if (pending > 0) {
+			for (int i = 0; i < 100; i++) {
+				LogiLED.LogiLedSetLighting(0, i, 0);
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+				}
+			}
+		} else {
+			LogiLED.LogiLedSetLighting(0, 0, 0);
+		}
+		LogiLED.LogiLedSetTargetDevice(LogiLED.LOGI_DEVICETYPE_PERKEY_RGB);
 	}
 
 	public void updatePending(int pending) {
