@@ -48,4 +48,10 @@ public class DummyPrinter implements PrinterInterface {
 		System.out.println("France.");
 	}
 
+	@Override
+	public void suisse() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
