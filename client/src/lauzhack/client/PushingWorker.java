@@ -41,7 +41,7 @@ public class PushingWorker {
 			}
 			
 			if(m.getMessageAsString().equals("\\france")){
-				printer.france();
+				printer.french();
 				kbLock.unlock();
 				return;
 			}

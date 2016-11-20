@@ -36,4 +36,16 @@ public class DummyPrinter implements PrinterInterface {
 		System.out.println("Rainbow.");
 	}
 
+	@Override
+	public void italia() {
+		// TODO Auto-generated method stub
+		System.out.println("Italia.");
+	}
+
+	@Override
+	public void french() {
+		// TODO Auto-generated method stub
+		System.out.println("France.");
+	}
+
 }
