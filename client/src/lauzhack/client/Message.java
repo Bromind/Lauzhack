@@ -20,38 +20,34 @@ public class Message {
 	}
 	
 	public Message(String json_string) {
-		try{
-		JSONObject parser = new JSONObject(json_string);
-		
-		JSONArray messageArray = parser.getJSONArray("message");
-		JSONArray colorsArray = parser.getJSONArray("colors");
+		try {
+			JSONObject parser = new JSONObject(json_string);
 
-		this.message = new char[20];
-		this.colors = new Color[20];
-		
-		for(int i = 0; i < messageArray.length(); i++) {
-			String s = messageArray.getString(i);
-			this.message[i] = s.charAt(0);
-		}
-		
-		for(int i = 0; i < colorsArray.length(); i++) {
-			JSONObject color = colorsArray.getJSONObject(i);
-			this.colors[i] = new Color(color.getInt("red"), color.getInt("green"), color.getInt("blue"));
-		}
-		
-		this.src = parser.getString("source");
-		this.dest = parser.getString("dest");
-		this.colors = new Color[0];
+			JSONArray messageArray = parser.getJSONArray("message");
+			JSONArray colorsArray = parser.getJSONArray("colors");
+
+			this.message = new char[20];
+			this.colors = new Color[20];
+
+			for (int i = 0; i < messageArray.length(); i++) {
+				String s = messageArray.getString(i);
+				this.message[i] = s.charAt(0);
+			}
+
+			this.colors = null;
+			if (colorsArray.length() > 0) {
+				this.colors = new Color[colorsArray.length()];
+				for (int i = 0; i < colorsArray.length(); i++) {
+					JSONObject color = colorsArray.getJSONObject(i);
+					this.colors[i] = new Color(color.getInt("red"), color.getInt("green"), color.getInt("blue"));
+				}
+			}
+
+			this.src = parser.getString("source");
+			this.dest = parser.getString("dest");
 		} catch (JSONException e) {
 			System.err.println("Error parsing JSON: " + json_string);
 			System.err.println(e.toString());
-		}
-		
-		if(colors.length < message.length) {
-			Color c =  colors[colors.length - 1];
-			for(int i = message.length; i < colors.length; i++){
-				colors[i] = c;
-			}
 		}
 	}
 	
