@@ -46,6 +46,12 @@ public class PushingWorker {
 				return;
 			}
 			
+			if(m.getMessageAsString().equals("\\suisse")){
+				printer.suisse();
+				kbLock.unlock();
+				return;
+			}
+			
 			printer.updatePending(pending_messages.size());
 			if (m.getColor() == null) {
 				printer.printMessage(m.getMessage());
