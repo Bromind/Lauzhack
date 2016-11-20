@@ -36,14 +36,8 @@ public class Client {
 		PollingWorker pw = new PollingWorker(ne, printer, pending_messages, listLock, kbLock);
         (new Thread(pw)).start();
         PushingWorker pushing = new PushingWorker(printer, pending_messages, listLock, kbLock);
-        (new Thread(pushing)).start();
-        Color[] color = {new Color(100, 0, 0)};
-        try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        ne.sendMessage("prout", color, "My name");
+
+        CommunicationWrapper cw = new CommunicationWrapper(pushing, ne);
+        
 	}
 }

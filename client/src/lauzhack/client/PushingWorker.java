@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 
 import lauzhack.client.keyboard.PrinterInterface;
 
-public class PushingWorker implements Runnable{
+public class PushingWorker {
 
 	List<Message> pending_messages;
 	Lock listLock;
@@ -19,24 +19,21 @@ public class PushingWorker implements Runnable{
 		this.printer = printer;
 	}
 	
-	@Override
-	public void run() {
-		while(true){
-			listLock.lock();
-			int size = pending_messages.size();
-			Message m;
-			if(size != 0) {
-				m = pending_messages.remove(0);
-				listLock.unlock();
-				kbLock.lock();
-				printer.updatePending(pending_messages.size());
-				printer.printMessage(m.getMessage(), m.getColor());
-				kbLock.unlock();
-			} else {
-				listLock.unlock();
-			}
+	public void displayNextMessage() {
+		listLock.lock();
+		int size = pending_messages.size();
+		Message m;
+		if (size != 0) {
+			m = pending_messages.remove(0);
+			listLock.unlock();
+			kbLock.lock();
+			printer.updatePending(pending_messages.size());
+			printer.printMessage(m.getMessage(), m.getColor());
+			kbLock.unlock();
+		} else {
+			listLock.unlock();
 		}
-		
+
 	}
 
 }
