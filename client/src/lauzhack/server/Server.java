@@ -24,8 +24,13 @@ import lauzhack.client.Message;
 
 public class Server{
 
+	private static final boolean VERBOSE = false;
+	private static final String TEMP_FILE_PREFIX = "c:/temp/";
+	
 	public static void main(String[] args) throws Exception {
-		System.out.println("start");
+		if(VERBOSE) {
+			System.out.println("start");
+		}
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 		server.createContext("/send", new SendHandler());
 		server.createContext("/receive", new ReceiveHandler());
@@ -35,7 +40,6 @@ public class Server{
 
 	static class ReceiveHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
-
 			System.out.println("receive");
 
 			// add the required response header for a PDF file
@@ -51,9 +55,11 @@ public class Server{
 				name2[i]=name[i];
 			}
 			String str = new String(name2, StandardCharsets.UTF_8);
-			//System.out.println(str);
-			String filename = "/tmp/" + str + ".txt";
-			System.out.println("[ReceiveHandler/handle] Creating file " + filename);
+			String filename = TEMP_FILE_PREFIX + str + ".txt";
+			if(VERBOSE) {
+				System.out.println(str);
+				System.out.println("[ReceiveHandler/handle] Creating file " + filename);
+			}
 			File file = new File (filename);
 			if(!file.exists()) { 
 				PrintWriter writer = new PrintWriter(file);
@@ -81,7 +87,9 @@ public class Server{
 	static class SendHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
 
-			System.out.println("[Server/SendHandler] send");
+			if(VERBOSE) {
+				System.out.println("[Server/SendHandler] send");
+			}
 
 			// add the required response header for a PDF file
 			Headers h = t.getResponseHeaders();
@@ -101,7 +109,7 @@ public class Server{
 			Message message = new Message(read_byte);	
 			String dest = message.getDest();
 
-			FileWriter fw = new FileWriter("c:/temp/"+dest+".txt", true);
+			FileWriter fw = new FileWriter(TEMP_FILE_PREFIX + dest + ".txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter out = new PrintWriter(bw);
 			

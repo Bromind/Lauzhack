@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+
 import lauzhack.client.keyboard.DummyPrinter;
 import lauzhack.client.keyboard.PrinterInterface;
 
@@ -13,6 +14,8 @@ import lauzhack.client.keyboard.PrinterInterface;
 public class Client {
 
 	public static void main(String[] args) {
+		System.out.println("Starting Client");
+		
 		NetworkInterface ne;
 		List<Message> pending_messages = new LinkedList<>();
 		Lock lock = new ReentrantLock(true);
@@ -31,16 +34,5 @@ public class Client {
         (new Thread(pw)).start();
         PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
         (new Thread(pushing)).start();
-        
-        
-		Color colors[] = { new Color(0, 0, 0) };
-
-		// Example
-
-		//ne.sendInitMessage();
-		ne.sendMessage("Wololo", colors, "My name");
-
 	}
-
-
 }

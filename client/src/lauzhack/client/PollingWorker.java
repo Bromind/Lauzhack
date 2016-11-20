@@ -21,6 +21,7 @@ class PollingWorker implements Runnable {
 	}
 
 	public void run() {
+		int pending = 0;
 		while (true) {
 			List<String> new_message;
 
@@ -31,7 +32,10 @@ class PollingWorker implements Runnable {
 					pending_messages.add(new Message(line));
 					lock.unlock();
 				}
-				printer.updatePending(pending_messages.size());
+				if(pending != pending_messages.size()) {
+					printer.updatePending(pending_messages.size());
+					pending = pending_messages.size();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (NoMessageException e) {
@@ -40,11 +44,6 @@ class PollingWorker implements Runnable {
 				} catch (InterruptedException e1) {
 
 				}
-			}
-			try{
-				wait(1000);
-			} catch (InterruptedException e){
-				
 			}
 		}
 	}

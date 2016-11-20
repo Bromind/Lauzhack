@@ -65,7 +65,7 @@ public class NetworkInterface {
 		try{
 			URL serverAddress = new URL(server + "/send");
 			connection = (HttpURLConnection) serverAddress.openConnection();
-			//connection.setRequestMethod(method);
+			connection.setRequestMethod(method);
 			connection.setRequestProperty("Content-Length", 
 					Integer.toString(json_str.getBytes().length));
 			connection.setUseCaches(false);
