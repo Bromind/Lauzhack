@@ -28,8 +28,7 @@ public class PushingWorker {
 			listLock.unlock();
 			kbLock.lock();
 			
-			System.out.println('[' + m.getMessageAsString() + ']');
-			if(m.getMessageAsString().equals("rainbow")) {
+			if(m.getMessageAsString().equals("\\rainbow")) {
 				printer.rainbow();
 				kbLock.unlock();
 				return;
