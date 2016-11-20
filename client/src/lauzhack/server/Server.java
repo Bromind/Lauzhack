@@ -106,9 +106,9 @@ public class Server{
 			out.println(read_byte);
 			out.close();
 			// ok, we are ready to send the response.
-			t.sendResponseHeaders(200, 0);
+			t.sendResponseHeaders(200, 10);
 			OutputStream os = t.getResponseBody();
-			//os.write(bytearray,0,bytearray.length);
+			os.write(name,0,10);
 			os.close();
 
 		}
