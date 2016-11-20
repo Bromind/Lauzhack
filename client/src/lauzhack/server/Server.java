@@ -28,7 +28,7 @@ public class Server{
 	private static final String TEMP_FILE_PREFIX = "c:/temp/";
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println("Server Anal plug and play is up, provided to you by the Fist-in, Fist-out team.");
+		System.out.println("Server is up");
 		
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 		server.createContext("/send", new SendHandler());
