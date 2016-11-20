@@ -12,9 +12,11 @@ import lauzhack.client.keyboard.PrinterInterface;
 
 
 public class Client {
+	
+	private static final boolean VERBOSE = false;
 
 	public static void main(String[] args) {
-		System.out.println("Starting Client");
+		System.out.println("Starting Anal-plug-and-play client, provided to you by the Fist-in, Fist-out team.");
 		
 		NetworkInterface ne;
 		List<Message> pending_messages = new LinkedList<>();
@@ -23,7 +25,7 @@ public class Client {
 		
 		/* Init stuff */
 		try {
-			ne = new NetworkInterface("My name", "http://localhost:8000", "POST");
+			ne = new NetworkInterface("My name", "http://localhost:8000", "POST", VERBOSE);
 		} catch (MalformedURLException e) {
 			System.err.println("U noob 4");
 			System.err.println(e.getMessage());
@@ -34,5 +36,8 @@ public class Client {
         (new Thread(pw)).start();
         PushingWorker pushing = new PushingWorker(printer, pending_messages, lock);
         (new Thread(pushing)).start();
+        
+        Color[] colors = {new Color(0, 0, 0)};
+        ne.sendMessage("lololol", colors, "My name");
 	}
 }

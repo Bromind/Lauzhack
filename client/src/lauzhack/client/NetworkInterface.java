@@ -18,11 +18,13 @@ public class NetworkInterface {
 	String src;
 	String server;
 	String method;
+	boolean verbose;
 	
-	public NetworkInterface(String sourceName, String serverAddress, String method) throws MalformedURLException {
+	public NetworkInterface(String sourceName, String serverAddress, String method, boolean verbose) throws MalformedURLException {
 		src = sourceName;
 		server= serverAddress;
 		this.method = method;
+		this.verbose = verbose;
 		
 	}
 	
@@ -36,7 +38,9 @@ public class NetworkInterface {
 		connection.setUseCaches(false);
 		connection.setDoOutput(true);
 
-		System.out.println("[NetworkInterface/getNextMessage] Polling");
+		if(verbose){
+			System.out.println("[NetworkInterface/getNextMessage] Polling");
+		}
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 		wr.writeBytes(src);
 		wr.close();
@@ -72,7 +76,9 @@ public class NetworkInterface {
 			connection.setDoOutput(true);
 			
 			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-			System.out.println("[NetworkInterface/sendMessage] Sending message.");
+			if(verbose) {
+				System.out.println("[NetworkInterface/sendMessage] Sending message.");
+			}
 			wr.writeBytes(json_str);
 			wr.close();
 		} catch (IOException e) {
@@ -85,46 +91,7 @@ public class NetworkInterface {
 			InputStream is = connection.getInputStream();
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 			
-		    StringBuffer response = new StringBuffer(); // or StringBuffer if Java version 5+
-		    String line;
-		    while ((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    return (response.toString() == "ACK");
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			return false;
-		}
-	}
-
-	public boolean sendInitMessage(){
-		HttpURLConnection connection;
-		
-		try{
-			URL serverAddress = new URL(server + "/init");
-			connection = (HttpURLConnection) serverAddress.openConnection();
-			connection.setRequestMethod(method);
-			connection.setRequestProperty("Content-Length", 
-					Integer.toString(src.getBytes().length));
-			connection.setUseCaches(false);
-			connection.setDoOutput(true);
-			
-			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-			System.out.println("[NetworkInterface/sendInitMessage] Sending message.");
-			wr.writeBytes(src);
-			wr.close();
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			return false;
-		}
-		
-		try{
-			InputStream is = connection.getInputStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-			
-		    StringBuffer response = new StringBuffer(); // or StringBuffer if Java version 5+
+		    StringBuffer response = new StringBuffer();
 		    String line;
 		    while ((line = rd.readLine()) != null) {
 		      response.append(line);

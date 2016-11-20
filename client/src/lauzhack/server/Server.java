@@ -28,9 +28,8 @@ public class Server{
 	private static final String TEMP_FILE_PREFIX = "c:/temp/";
 	
 	public static void main(String[] args) throws Exception {
-		if(VERBOSE) {
-			System.out.println("start");
-		}
+		System.out.println("Server Anal plug and play is up, provided to you by the Fist-in, Fist-out team.");
+		
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 		server.createContext("/send", new SendHandler());
 		server.createContext("/receive", new ReceiveHandler());
@@ -40,7 +39,9 @@ public class Server{
 
 	static class ReceiveHandler implements HttpHandler {
 		public void handle(HttpExchange t) throws IOException {
-			System.out.println("receive");
+			if(VERBOSE) {
+				System.out.println("receive");
+			}
 
 			// add the required response header for a PDF file
 			Headers h = t.getResponseHeaders();
