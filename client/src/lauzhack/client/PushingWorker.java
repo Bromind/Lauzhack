@@ -27,6 +27,7 @@ public class PushingWorker implements Runnable{
 			Message m;
 			if(size != 0) {
 				m = pending_messages.remove(0);
+				listLock.unlock();
 				kbLock.lock();
 				printer.updatePending(pending_messages.size());
 				printer.printMessage(m.getMessage(), m.getColor());
