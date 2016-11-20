@@ -2,36 +2,115 @@ package lauzhack.client.keyboard;
 
 import com.logitech.gaming.LogiLED;
 
-public class Printer {
-	
-	private int pendingNb;
+import lauzhack.client.Color;
 
+public class Printer implements PrinterInterface {
+	
+	private int pending;
+	private Color backgroundColor;
+	private Color pendingColor;
+	private Color defaultMessageColor;                                                                                                                                                                                
+	
+	public Printer(Color backgroundColor, Color pendingColor, Color defaultMessageColor) {
+		LogiLED.LogiLedInit();
+		pending = 0;
+		this.backgroundColor = backgroundColor;
+		this.pendingColor = pendingColor;
+		this.defaultMessageColor = defaultMessageColor;
+	} 
+	
 	public Printer() {
 		LogiLED.LogiLedInit();
-		pendingNb = 0;
-	}   
+		pending = 0;
+		this.backgroundColor = new Color(0, 0, 100);
+		this.pendingColor = new Color(0, 100, 0);
+		this.defaultMessageColor = new Color(100, 0, 0);
+	} 
 	
-	public boolean printMessage(char[] m) throws InterruptedException {
-		LogiLED.LogiLedSetLighting(0, 0, 100);
+	public boolean printMessage(char[] m) {
+		clear();
 		for (int i = 0; i < m.length; i++) {
 			int key = charToKey(m[i]);
-			printKey(key, 100, 0, 0);
-			Thread.sleep(1000);
-			LogiLED.LogiLedSetLighting(0, 0, 100);
+			updateWithKey(key);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			clear();
 		}
 		return true;
 	}
 	
-	public boolean printKey(int key, int r, int g, int b) {
-		return LogiLED.LogiLedSetLightingForKeyWithScanCode(key, r, g, b);
+	public boolean printMessage(char[] m, Color[] c) {
+		clear();
+		for (int i = 0; i < m.length; i++) {
+			int key = charToKey(m[i]);
+			updateWithKey(key, c[i]);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			clear();
+		}
+		return true;
 	}
 	
-	private void drawPendingNb() {
-		 
+	private void clear() {
+		LogiLED.LogiLedSetLighting(
+				backgroundColor.getRed(), 
+				backgroundColor.getGreen(),
+				backgroundColor.getBlue());
+		drawPendingNb();
+	}
+	
+	private void printKey(int key) {
+		printKey(key, defaultMessageColor);
+	}
+	
+	private void printKey(int key, Color c) {
+		LogiLED.LogiLedSetLightingForKeyWithScanCode(
+				key,
+				c.getRed(),
+				c.getGreen(),
+				c.getBlue()
+		);
+	}
+	
+	private void updateWithKey(int key, Color c) {
+		printKey(key, c);
+		drawPendingNb();
+	}
+	
+	private void updateWithKey(int key) {
+		printKey(key);
+		drawPendingNb();
+	}
+	
+	public void drawPendingNb() {
+		int c = pending;
+		if (c > 9) {
+			c = 9;
+			printKey(0x0d, pendingColor);
+		}
+		int key = intToKey(c);
+		printKey(key, pendingColor);
+		
 	}
 	
 	public void updatePending(int pending) {
-				
+		this.pending = pending;		
+		clear();
+	}
+	
+	private int intToKey(int v) {
+		if(v == 0) {
+			return 0x0b;
+		}
+		
+		return v+1;
 	}
 	
 	private int charToKey(char c) {
