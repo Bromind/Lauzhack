@@ -86,6 +86,13 @@ public class GUI extends Frame implements ActionListener {
       setTitle("Spread the love");  // "super" Frame sets title
       setSize(400, 130);  // "super" Frame sets initial window size
       setVisible(true);   // "super" Frame shows
+      addWindowListener( new WindowAdapter() {
+          @Override
+          public void windowClosing(WindowEvent we) {
+              System.exit(0);
+          }
+      } );
+      
    }
 
    private class ButtonClickListener implements ActionListener{
@@ -124,7 +131,7 @@ public class GUI extends Frame implements ActionListener {
 	   }	
 	   }
 	   }
-
+  
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
