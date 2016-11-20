@@ -9,4 +9,5 @@ public interface PrinterInterface {
 	public void rainbow();
 	public void italia();
 	public void french();
+	public void suisse();
 }

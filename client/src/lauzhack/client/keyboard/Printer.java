@@ -297,5 +297,37 @@ public class Printer implements PrinterInterface {
 		}
 		
 	}
+	
+	public void suisse() {
+		char[] redMessage = {
+				'q', 'w', 'e', 'r', 'y', 'u', 'i', 'o',
+				'a', 's', 'k', 'l', 'd', 'j',
+				'z', 'x', 'c', 'v', 'n', 'm', ',', '.'
+		};
+		char[] whiteMessage = {'f', 'g', 'h', 't','g', 'b'};
+		
+		Color red = new Color(100, 0, 0);
+		Color white = new Color(100, 100, 100);
+		for (int i = 0; i < 10; i++) {
+			LogiLED.LogiLedSetLighting(0, 0, 0);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (char m : redMessage) {
+				printKey(charToKey(m), red);
+			}
+			for (char m : whiteMessage) {
+				printKey(charToKey(m), white);
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
