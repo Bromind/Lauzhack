@@ -125,7 +125,7 @@ public class GUI extends Frame implements ActionListener {
 	   }
 	   else if(command.equals("Pseudo")){
 		   cw.newName(text_user_name.getText());
-	   	   text_user_name.setEditable(false);
+	   	   //text_user_name.setEditable(false);
 	   	   
 	   	   
 	   }else if(command.equals("Choose Color")){        

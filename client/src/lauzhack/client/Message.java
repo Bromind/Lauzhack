@@ -27,7 +27,7 @@ public class Message {
 
 			String mes = parser.getString("message");
 			
-			this.message = mes.substring(0, 20).toCharArray();
+			this.message = mes.toCharArray();
 			this.colors = new Color[20];
 
 			this.colors = null;
