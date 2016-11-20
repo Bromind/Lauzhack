@@ -34,4 +34,8 @@ public class Color {
 		
 		return json;
 	}
+	
+	public String toString(){
+		return "(" + red + ";" + green + ";" + blue + ")";  
+	}
 }

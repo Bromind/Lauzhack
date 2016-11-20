@@ -12,9 +12,13 @@ public class DummyPrinter implements PrinterInterface {
 
 	@Override
 	public boolean printMessage(char[] m, Color[] c) {
-		System.out.print("Colored ");
+		System.out.print("Colored: [");
+		for(Color col: c)
+			System.out.print(col);
+		System.out.println("]");
+		
 		for(char c2: m) {
-			System.out.println(c2);
+			System.out.print(c2);
 		}
 		System.out.println("");
 		

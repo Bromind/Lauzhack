@@ -1,7 +1,19 @@
 package lauzhack.gui;
 
-import java.awt.*;        // Using AWT container and component classes
+
+//Using AWT container and component classes
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
 import java.awt.event.*;  // Using AWT event classes and listener interfaces
+
+import java.util.LinkedList;
+import java.util.List;
 
 import lauzhack.client.CommunicationWrapper;
 
@@ -99,7 +111,9 @@ public class GUI extends Frame implements ActionListener {
 		   String mes =text_message.getText();
 		   String dest = text_dest.getText();
 		  
-		   cw.sendMessage(mes, dest, col);
+		   List<Color> lc = new LinkedList<Color>();
+		   lc.add(col[0]);
+		   cw.sendMessage(mes, dest, lc);
 		   text_message.setText("");
 	   }
 	   else if(command.equals("Pseudo")){

@@ -1,5 +1,7 @@
 package lauzhack.client;
 
+import java.util.List;
+
 public class CommunicationWrapper {
 
 	NetworkInterface ne;
@@ -9,15 +11,19 @@ public class CommunicationWrapper {
 		this.pw = pw;
 	}
 	
-	public void sendMessage(String message, String dest, Color[] colors) {
-		/*
-		if (colors.length >= 1) {
-			for (int i = colors.length; i < message.length(); i++) {
-				colors[i] = colors[0];
+	public void sendMessage(String message, String dest, List<Color> colors) {
+		if (colors.size() >= 1) {
+			int lastIndex = colors.size() - 1;
+			for (int i = colors.size(); i < message.length(); i++) {
+				colors.add(colors.get(lastIndex));
 			}
 		}
-		*/
-		ne.sendMessage(message, colors, dest);
+		
+		Color[] c_array = new Color[message.length()];
+		for(int i = 0; i < message.length(); i++)
+			c_array[i] = colors.get(i);
+		
+		ne.sendMessage(message, c_array, dest);
 	}
 	
 	public void displayNext(){

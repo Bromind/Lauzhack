@@ -11,14 +11,14 @@ public class PushingWorker {
 	Lock listLock;
 	Lock kbLock;
 	PrinterInterface printer;
-	
+
 	public PushingWorker(PrinterInterface printer, List<Message> pending, Lock listLock, Lock kbLock) {
 		this.listLock = listLock;
 		this.kbLock = kbLock;
 		this.pending_messages = pending;
 		this.printer = printer;
 	}
-	
+
 	public void displayNextMessage() {
 		listLock.lock();
 		int size = pending_messages.size();
@@ -28,7 +28,11 @@ public class PushingWorker {
 			listLock.unlock();
 			kbLock.lock();
 			printer.updatePending(pending_messages.size());
-			printer.printMessage(m.getMessage(), m.getColor());
+			if (m.getColor() == null) {
+				printer.printMessage(m.getMessage());
+			} else {
+				printer.printMessage(m.getMessage(), m.getColor());
+			}
 			kbLock.unlock();
 		} else {
 			listLock.unlock();
