@@ -95,7 +95,7 @@ public class GUI extends Frame implements ActionListener {
       
       //tfOutput.setEditable(false);  // read-only
  
-      setTitle("Spread the love");  // "super" Frame sets title
+      setTitle("Whisper");  // "super" Frame sets title
       setSize(450, 130);  // "super" Frame sets initial window size
       setVisible(true);   // "super" Frame shows
       addWindowListener( new WindowAdapter() {
