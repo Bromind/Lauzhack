@@ -17,6 +17,7 @@ public class Printer implements PrinterInterface {
 		this.backgroundColor = backgroundColor;
 		this.pendingColor = pendingColor;
 		this.defaultMessageColor = defaultMessageColor;
+		clear();
 	} 
 	
 	public Printer() {
@@ -25,6 +26,7 @@ public class Printer implements PrinterInterface {
 		this.backgroundColor = new Color(0, 0, 100);
 		this.pendingColor = new Color(0, 100, 0);
 		this.defaultMessageColor = new Color(100, 0, 0);
+		clear();
 	} 
 	
 	public boolean printMessage(char[] m) {
@@ -97,7 +99,6 @@ public class Printer implements PrinterInterface {
 		}
 		int key = intToKey(c);
 		printKey(key, pendingColor);
-		
 	}
 	
 	public void updatePending(int pending) {
