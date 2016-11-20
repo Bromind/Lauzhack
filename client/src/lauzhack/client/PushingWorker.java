@@ -34,6 +34,18 @@ public class PushingWorker {
 				return;
 			}
 			
+			if(m.getMessageAsString().equalsIgnoreCase("\\italia")) {
+				printer.italia();
+				kbLock.unlock();
+				return;
+			}
+			
+			if(m.getMessageAsString().equals("\\france")){
+				printer.france();
+				kbLock.unlock();
+				return;
+			}
+			
 			printer.updatePending(pending_messages.size());
 			if (m.getColor() == null) {
 				printer.printMessage(m.getMessage());
