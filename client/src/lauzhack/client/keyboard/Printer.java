@@ -1,5 +1,8 @@
 package lauzhack.client.keyboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.logitech.gaming.LogiLED;
 
 import lauzhack.client.Color;
@@ -169,6 +172,10 @@ public class Printer implements PrinterInterface {
 			return 0x2c;
 		case ' ':
 			return 0x39;
+		case ',':
+			return 0x33;
+		case '.':
+			return 0x34;
 		default:
 			return 0;
 		}
@@ -202,6 +209,41 @@ public class Printer implements PrinterInterface {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void swiss() {
+		char[] blueMessage = {'q', 'a', 'w', 's', 'e', 'd', 'z', 'x', 'd', 'c'};
+		char[] whiteMessage = {'r', 't', 'y', 'f', 'g', 'h', 'v', 'b', 'n'};
+		char[] redMessage = {'u', 'i', 'o', 'j', 'k', 'l', 'm', ',', '.'};
+		Color blue = new Color(0, 0, 100);
+		Color white = new Color(100, 100, 100);
+		Color red = new Color(100, 0, 0);
+		
+		for (int i = 0; i < 10; i++) {
+			LogiLED.LogiLedSetLighting(0, 0, 0);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (char m : blueMessage) {
+				printKey(charToKey(m), blue);
+			}
+			for (char m : whiteMessage) {
+				printKey(charToKey(m), white);
+			}
+			for (char m : redMessage) {
+				printKey(charToKey(m), red);
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }
